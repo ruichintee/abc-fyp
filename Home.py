@@ -9,7 +9,7 @@ def main():
         page_title="Blood Donation Eligibility Checker",
         page_icon="🩸",
         layout="wide",
-        initial_sidebar_state="expanded",
+        initial_sidebar_state="collapsed",
     )
        
     st.title("Welcome to the Blood Donation Eligibility Checker")
