@@ -10,7 +10,7 @@ load_dotenv()
 
 # Retrieve the OpenAI API key
 # Set OpenAI API key
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["OPENAI_API_KEY"] = st.secrets["OpenAI_key"]
 
 def scrape_eligibility_info():
     with open("data/canidonate.html", "r", encoding="utf-8") as file:
