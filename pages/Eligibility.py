@@ -64,7 +64,7 @@ def main():
 
         # Pass data to the eligibility agent (using OpenAI)
         if st.button("Check Eligibility"):
-            check = f"""
+            context = f"""
             The user is {age} years old, and weighs {weight}. He is in good health, and has travelled recently to the following places: {travel_history}.
             He also has the following medical history: {medical_conditions}.
         
@@ -81,19 +81,21 @@ def main():
             "don't know. Use three sentences maximum and keep the "
             "answer concise."
             "\n\n"
-            "{check}"
+            "{context}"
             )
 
+            
             prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", system_prompt),
-                ("human", "{input}"),
+                ("user", "{input}"),
             ]
             )
             llm = ChatOpenAI(model="gpt-4o")
             retriever = scrape_eligibility_info()
-            question_answer_chain = create_stuff_documents_chain(llm, prompt)
-            rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+            document_chain = create_stuff_documents_chain(llm, prompt)
+            rag_chain = create_retrieval_chain(retriever, document_chain)
+
 
             results = rag_chain.invoke({"input": "Determine if the user is eligible to donate blood."})
             st.write(results["answer"])
