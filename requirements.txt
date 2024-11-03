@@ -7,3 +7,6 @@ matplotlib
 python-dotenv
 langchain
 langchain-openai
+streamlit-folium 
+geopy 
+folium
