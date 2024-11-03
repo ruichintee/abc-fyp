@@ -7,13 +7,13 @@ def main():
     # Buttons to navigate to other pages
     st.write("Navigate to:")
     if st.button("Am I Eligible"):
-        st.session_state.page = "Eligibility"
+        st.session_state.page = Eligibility.py
     if st.button("Where to Donate"):
-        st.session_state.page = "DonationLocations"
+        st.session_state.page = DonationLocation.py
     if st.button("About Us"):
-        st.session_state.page = "AboutUs"
+        st.session_state.page = AboutUs.py
     if st.button("Methodology"):
-        st.session_state.page = "Methodology"
+        st.session_state.page = Methodology.py
 
 
     st.write("IMPORTANT NOTICE: This web application is a prototype developed for educational purposes only. The information provided here is NOT intended for real-world usage and should not be relied upon for making any decisions, especially those related to financial, legal, or healthcare matters. Furthermore, please be aware that the LLM may generate inaccurate or incorrect information. You assume full responsibility for how you use any generated output. Always consult with qualified professionals for accurate and personalized advice.")
