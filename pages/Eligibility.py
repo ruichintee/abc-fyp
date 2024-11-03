@@ -89,7 +89,7 @@ def main():
             prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", system_prompt),
-                ("human", "{input}" + check),
+                ("human", "{input}"),
             ]
             )
             llm = ChatOpenAI(model="gpt-4o")
