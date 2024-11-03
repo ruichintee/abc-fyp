@@ -88,7 +88,7 @@ def main():
             prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", system_prompt),
-                ("user", "{input}"),
+                ("human", "{input}"),
             ]
             )
             llm = ChatOpenAI(model="gpt-4o")
@@ -97,7 +97,8 @@ def main():
             rag_chain = create_retrieval_chain(retriever, document_chain)
 
 
-            results = rag_chain.invoke({"input": "Determine if the user is eligible to donate blood."})
+            results = rag_chain.invoke({"input": {"input": "Determine if the user is eligible to donate blood.",
+                                                "context": context}})
             st.write(results["answer"])
     
 
