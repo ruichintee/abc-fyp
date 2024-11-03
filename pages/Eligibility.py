@@ -80,10 +80,8 @@ def main():
             "the question. If you don't know the answer, say that you "
             "don't know. Use three sentences maximum and keep the "
             "answer concise."
-            "The user is {age} years old, and weighs {weight}. He is in good health, and has travelled recently to the following places: {travel_history}."
-            "He also has the following medical history: {medical_conditions}."
             "\n\n"
-            "{context}"
+            "{check}"
             )
 
             prompt = ChatPromptTemplate.from_messages(
