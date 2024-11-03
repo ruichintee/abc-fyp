@@ -51,57 +51,57 @@ def main():
 
     st.write("Interactive map showing bloodbank locations:")
     # Display map with all blood banks
-map_center = (1.3521, 103.8198)  # Center of Singapore
-blood_map = folium.Map(location=map_center, zoom_start=11)
+    map_center = (1.3521, 103.8198)  # Center of Singapore
+    blood_map = folium.Map(location=map_center, zoom_start=11)
 
 # Add markers for each blood bank
-for bank in blood_banks:
-    folium.Marker(
-        location=(bank["latitude"], bank["longitude"]),
-        popup=bank["name"],
-        icon=folium.Icon(color="red")
-    ).add_to(blood_map)
-
-# Display the map with blood banks
-st.write("**Blood Banks in Singapore**")
-st_folium(blood_map, width=700, height=500)
-
-# Ask for user's postal code
-st.write("Enter your address to find the nearest blood bank:")
-postal_code = st.text_input("Address:")
-
-if postal_code:
-    user_location = geocode_postal_code(postal_code)
-    if user_location:
-        # Find the nearest blood bank
-        nearest_bank, distance = find_nearest_blood_bank(user_location)
-        
-        # Display nearest blood bank information
-        st.write(f"**Nearest Blood Bank:** {nearest_bank['name']}")
-        st.write(f"**Distance:** {distance:.2f} km")
-        
-        # Add user location and nearest bank to a new map
-        nearest_map = folium.Map(location=user_location, zoom_start=12)
-        
-        # Mark user's location
+    for bank in blood_banks:
         folium.Marker(
-            location=user_location,
-            popup="Your Location",
-            icon=folium.Icon(color="blue")
-        ).add_to(nearest_map)
-        
-        # Mark nearest blood bank
-        folium.Marker(
-            location=(nearest_bank["latitude"], nearest_bank["longitude"]),
-            popup=nearest_bank["name"],
-            icon=folium.Icon(color="green")
-        ).add_to(nearest_map)
-        
-        # Display the map with user's location and nearest blood bank
-        st.write("**Your Location and Nearest Blood Bank**")
-        st_folium(nearest_map, width=700, height=500)
-    else:
-        st.error("Could not find the location for the given postal code. Please try again.")
+            location=(bank["latitude"], bank["longitude"]),
+            popup=bank["name"],
+            icon=folium.Icon(color="red")
+        ).add_to(blood_map)
+
+    # Display the map with blood banks
+    st.write("**Blood Banks in Singapore**")
+    st_folium(blood_map, width=700, height=500)
+    
+    # Ask for user's postal code
+    st.write("Enter your address to find the nearest blood bank:")
+    postal_code = st.text_input("Address:")
+    
+    if postal_code:
+        user_location = geocode_postal_code(postal_code)
+        if user_location:
+            # Find the nearest blood bank
+            nearest_bank, distance = find_nearest_blood_bank(user_location)
+            
+            # Display nearest blood bank information
+            st.write(f"**Nearest Blood Bank:** {nearest_bank['name']}")
+            st.write(f"**Distance:** {distance:.2f} km")
+            
+            # Add user location and nearest bank to a new map
+            nearest_map = folium.Map(location=user_location, zoom_start=12)
+            
+            # Mark user's location
+            folium.Marker(
+                location=user_location,
+                popup="Your Location",
+                icon=folium.Icon(color="blue")
+            ).add_to(nearest_map)
+            
+            # Mark nearest blood bank
+            folium.Marker(
+                location=(nearest_bank["latitude"], nearest_bank["longitude"]),
+                popup=nearest_bank["name"],
+                icon=folium.Icon(color="green")
+            ).add_to(nearest_map)
+            
+            # Display the map with user's location and nearest blood bank
+            st.write("**Your Location and Nearest Blood Bank**")
+            st_folium(nearest_map, width=700, height=500)
+        else:
+            st.error("Could not find the location for the given postal code. Please try again.")
 
 if __name__ == "__main__":
     main()
