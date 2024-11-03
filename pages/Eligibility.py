@@ -97,8 +97,9 @@ def main():
             rag_chain = create_retrieval_chain(retriever, document_chain)
 
 
-            results = rag_chain.invoke({"input": {"input": "Determine if the user is eligible to donate blood.",
-                                                "context": context}})
+            results = rag_chain.invoke(input =  "The user is {} years old, and weighs {} kg. He is in good health, and has travelled recently to the following places: {}."
+            "He also has the following medical history: {}. Determine if the user is eligible to donate blood.".format(age,weight,travel_history,medical_history)
+                                      )
             st.write(results["answer"])
     
 
