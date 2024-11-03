@@ -13,7 +13,7 @@ load_dotenv()
 openai_api_key= os.getenv('OPENAI_API_KEY')
 
 def scrape_eligibility_info():
-    with open("canidonate.html", "r", encoding="utf-8") as file:
+    with open("data/canidonate.html", "r", encoding="utf-8") as file:
         content = file.read()
 
     soup = BeautifulSoup(content, "html.parser")
@@ -66,7 +66,8 @@ def main():
         if st.button("Check Eligibility"):
             client = OpenAI(api_key=openai_api_key)
             check = f"""
-            The user is {age} years old, and weighs {weight}. He is in good health, and has the following {travel_history} and {medical_conditions}.
+            The user is {age} years old, and weighs {weight}. He is in good health, and has travelled recently to the following places: {travel_history}.
+            He also has the following medical history: {medical_conditions}.
             Determine if the user is eligible to donate blood.
         
             """
@@ -88,7 +89,7 @@ def main():
             prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", system_prompt),
-                ("human", "{input} Consider {check} too"),
+                ("human", "{input}"),
             ]
             )
             llm = ChatOpenAI(model="gpt-4o")
@@ -96,7 +97,7 @@ def main():
             question_answer_chain = create_stuff_documents_chain(llm, prompt)
             rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 
-            results = rag_chain.invoke({"input": "Am I eligible to donate blood?"})
+            results = rag_chain.invoke({"input": {check}})
             st.write(results["answer"])
     
 
