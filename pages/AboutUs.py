@@ -4,20 +4,19 @@ def main():
     st.title("About Us")
     st.write("""
     ### Project Scope
-    This project is designed to improve public awareness of blood donation criteria and streamline the donation process.
+    This project is designed to allow the public to assess if they are able to donate blood and to find the nearest donation centre, 
+    in a bid to make it more accessible
     
     ### Objectives
-    - Provide an easy-to-access eligibility checker
-    - Update users with real-time blood stock levels
+    - Provide an easy-to-access eligibility check
     - Guide users to nearby blood donation centers
     
     ### Data Sources
     - Blood donation eligibility: [HSA](https://www.hsa.gov.sg/blood-donation/can-i-donate)
-    - Blood stock levels: [Singapore Red Cross](https://redcross.sg/#bloodstock)
+    - Bloodbank Location: [HSA](https://www.hsa.gov.sg/blood-donation/where-to-donate)
     
     ### Key Features
     - User-friendly eligibility assessment
-    - Real-time stock level updates
     - Interactive map of blood donation centers
     """)
 
