@@ -1,5 +1,4 @@
 import streamlit as st
-from openai import OpenAI
 from bs4 import BeautifulSoup
 
 # Set up the OpenAI API key
@@ -64,7 +63,6 @@ def main():
 
         # Pass data to the eligibility agent (using OpenAI)
         if st.button("Check Eligibility"):
-            client = OpenAI(api_key=openai_api_key)
             check = f"""
             The user is {age} years old, and weighs {weight}. He is in good health, and has travelled recently to the following places: {travel_history}.
             He also has the following medical history: {medical_conditions}.
