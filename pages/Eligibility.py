@@ -67,7 +67,6 @@ def main():
             check = f"""
             The user is {age} years old, and weighs {weight}. He is in good health, and has travelled recently to the following places: {travel_history}.
             He also has the following medical history: {medical_conditions}.
-            Determine if the user is eligible to donate blood.
         
             """
             from langchain.chains import create_retrieval_chain
@@ -88,7 +87,7 @@ def main():
             prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", system_prompt),
-                ("human", "{input}"),
+                ("human", "{input}" + check),
             ]
             )
             llm = ChatOpenAI(model="gpt-4o")
@@ -96,7 +95,7 @@ def main():
             question_answer_chain = create_stuff_documents_chain(llm, prompt)
             rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 
-            results = rag_chain.invoke({"input": {check}})
+            results = rag_chain.invoke({"input": "Determine if the user is eligible to donate blood."})
             st.write(results["answer"])
     
 
