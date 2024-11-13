@@ -101,7 +101,12 @@ def main():
             "He also has the following medical history: {}. Determine if the user is eligible to donate blood.".format(age,weight,travel_history,medical_conditions)
                                        })
             st.write(results["answer"])
-    
+
+    elif age < 16:
+        st.write("You need to be at least 16 years old to donate blood! Try again when you're older!")
+
+    elif weight <45:
+        st.write("You need to be at least 45 kg to donate blood!")
 
 
 
