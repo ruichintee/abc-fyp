@@ -52,7 +52,11 @@ def scrape_eligibility_info():
 
 
 def main():
-
+    from langchain.chains import create_retrieval_chain
+    from langchain.chains.combine_documents import create_stuff_documents_chain
+    from langchain_core.prompts import ChatPromptTemplate
+    from langchain_openai import ChatOpenAI 
+    
     st.title("Am I Eligible to Donate Blood?")
     age = st.number_input("Enter your age", min_value=1, max_value=120)
     weight = st.number_input("Enter your weight (kg)", min_value=1.0, max_value=100.0)
@@ -64,18 +68,23 @@ def main():
 
         # Pass data to the eligibility agent (using OpenAI)
         if st.button("Check Eligibility"):
+            
+            llm = ChatOpenAI(
+            model="gpt-4o",
+            temperature=0,
+            max_tokens=None,
+            timeout=None,
+            max_retries=2,
+            )
+            
             context = f"""
             The user is {age} years old, and weighs {weight}. He is in good health, and has travelled recently to the following places: {travel_history}.
             He also has the following medical history: {medical_conditions}.
         
             """
-            from langchain.chains import create_retrieval_chain
-            from langchain.chains.combine_documents import create_stuff_documents_chain
-            from langchain_core.prompts import ChatPromptTemplate
-            from langchain_openai import ChatOpenAI 
 
             system_prompt = (
-            "You are an assistant for question-answering tasks. "
+            "You are an assistant to determine the user's eligibility to donate blood. "
             "Use the following pieces of retrieved context to answer "
             "the question. If you don't know the answer, say that you "
             "don't know. Use three sentences maximum and keep the "
@@ -91,16 +100,17 @@ def main():
                 ("human", "{input}"),
             ]
             )
-            llm = ChatOpenAI(model="gpt-4o")
             retriever = scrape_eligibility_info()
             document_chain = create_stuff_documents_chain(llm, prompt)
             rag_chain = create_retrieval_chain(retriever, document_chain)
 
+            
+            results = rag_chain.invoke(
+                {"input":  "The user is {} years old, and weighs {} kg. He is in good health, and has travelled recently to the following places: {}."
+                "He also has the following medical history: {}. Determine if the user is eligible to donate blood.".format(age,weight,travel_history,medical_conditions)
+                })
 
-            results = rag_chain.invoke({"input":  "The user is {} years old, and weighs {} kg. He is in good health, and has travelled recently to the following places: {}."
-            "He also has the following medical history: {}. Determine if the user is eligible to donate blood.".format(age,weight,travel_history,medical_conditions)
-                                       })
-            st.write(results["answer"])
+            st.write(results)
 
 
 
