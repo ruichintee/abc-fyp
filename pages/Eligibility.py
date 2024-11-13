@@ -57,8 +57,8 @@ def main():
     age = st.number_input("Enter your age", min_value=1, max_value=120)
     weight = st.number_input("Enter your weight (kg)", min_value=1.0, max_value=100.0)
     good_health = st.checkbox("Are you in good health?")
-    
-    if age >= 16 and weight >= 45 and good_health:
+        
+    if st.button("Continue"):
         travel_history = st.text_area("Please provide any recent travel history:")
         medical_conditions = st.text_area("Do you have any existing medical conditions?")
 
@@ -101,12 +101,6 @@ def main():
             "He also has the following medical history: {}. Determine if the user is eligible to donate blood.".format(age,weight,travel_history,medical_conditions)
                                        })
             st.write(results["answer"])
-
-        elif age < 16:
-            st.caption("You need to be at least 16 years old to donate blood! Try again when you're older!")
-
-        elif weight <45:
-            st.caption("You need to be at least 45 kg to donate blood!")
 
 
 
