@@ -103,10 +103,10 @@ def main():
             st.write(results["answer"])
 
         elif age < 16:
-            st.write("You need to be at least 16 years old to donate blood! Try again when you're older!")
+            st.caption("You need to be at least 16 years old to donate blood! Try again when you're older!")
 
         elif weight <45:
-            st.write("You need to be at least 45 kg to donate blood!")
+            st.caption("You need to be at least 45 kg to donate blood!")
 
 
 
